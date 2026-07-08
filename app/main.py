@@ -1,8 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-
 from src.critic_service import CriticService
-
 
 app = FastAPI(
     title="Movie Recommendation API",
@@ -37,6 +35,11 @@ def root():
         "message": "Movie Recommendation API is running",
         "docs": "/docs",
     }
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 
 @app.get("/movies", response_model=list[MovieResponse])

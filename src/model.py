@@ -8,10 +8,8 @@ class MatrixFactorization(nn.Module):
 
         self.user_embeddings = nn.Embedding(num_users, embedding_dim)
         self.movie_embeddings = nn.Embedding(num_movies, embedding_dim)
-
         self.user_biases = nn.Embedding(num_users, 1)
         self.movie_biases = nn.Embedding(num_movies, 1)
-
         self.global_bias = nn.Parameter(torch.zeros(1))
 
     def forward(self, user_ids, movie_ids):

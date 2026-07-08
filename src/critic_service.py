@@ -29,7 +29,6 @@ class CriticService:
             Movie(9, "Heat", ["Crime", "Action"]),
             Movie(10, "Finding Nemo", ["Animation", "Adventure"]),
         ]
-
         self.ratings: list[Rating] = []
 
     def list_movies(self) -> list[Movie]:
@@ -40,6 +39,7 @@ class CriticService:
             raise ValueError("Rating must be between 0.5 and 5.0")
 
         movie_exists = any(movie.movie_id == movie_id for movie in self.movies)
+
         if not movie_exists:
             raise ValueError(f"Movie {movie_id} does not exist")
 
@@ -47,7 +47,8 @@ class CriticService:
             (
                 saved_rating
                 for saved_rating in self.ratings
-                if saved_rating.user_id == user_id and saved_rating.movie_id == movie_id
+                if saved_rating.user_id == user_id
+                and saved_rating.movie_id == movie_id
             ),
             None,
         )
@@ -65,13 +66,17 @@ class CriticService:
 
     def recommend(self, user_id: str, limit: int = 5) -> list[Movie]:
         user_ratings = self.get_user_ratings(user_id)
+
         rated_movie_ids = {rating.movie_id for rating in user_ratings}
 
         liked_movie_ids = {
-            rating.movie_id for rating in user_ratings if rating.rating >= 4.0
+            rating.movie_id
+            for rating in user_ratings
+            if rating.rating >= 4.0
         }
 
         liked_genres = set()
+
         for movie in self.movies:
             if movie.movie_id in liked_movie_ids:
                 liked_genres.update(movie.genres)
