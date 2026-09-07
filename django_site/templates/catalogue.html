@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Artificial Critic — Movies</title>
+  </head>
+  <body>
+    <main>
+      <h1>Artificial Critic</h1>
+      <p>Explore the movies available for ratings and recommendations.</p>
+      <ul>
+        {% for movie in movies %}
+        <li><strong>{{ movie.title }}</strong> — {{ movie.genres|join:", " }}</li>
+        {% endfor %}
+      </ul>
+    </main>
+  </body>
+</html>

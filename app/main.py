@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from src.critic_service import CriticService
+from django_site.asgi import application as django_application
 
 app = FastAPI(
     title="Movie Recommendation API",
@@ -67,3 +68,6 @@ def get_user_ratings(user_id: str):
 @app.get("/users/{user_id}/recommendations", response_model=list[MovieResponse])
 def recommend_movies(user_id: str, limit: int = 5):
     return service.recommend(user_id=user_id, limit=limit)
+
+
+app.mount("/django", django_application)
